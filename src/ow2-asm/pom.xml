@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.babyfish</groupId>
+    <artifactId>babyfish-parent</artifactId>
+    <version>1.1.0.Alpha</version>
+  </parent>
+  <artifactId>ow2-asm</artifactId>
+  
+  <name>ow2-asm</name>
+  <description>
+A clone of ASM(http://asm.ow2.org), should not be used by user directly.
+(
+The API of ASM is unstable, but it's used by many libraries and frameworks so that
+it can cause the jar conflict easily.
+BabyFish has to copy some source of it and change its package name to avoid the java conflict.
+)
+  </description>
+  <url>https://github.com/babyfish-ct/babyfish</url>
+
+  <licenses>
+    <license>
+      <name>LGPL-3.0</name>
+      <url>http://opensource.org/licenses/LGPL-3.0</url>
+    </license>
+  </licenses>
+  
+  <developers>
+    <developer>
+      <name>Tao Chen(Chinese Name: &#38472;&#28059;)</name>
+      <email>babyfish-ct@163.com</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git@github.com/babyfish-ct/babyfish.git</connection>
+    <developerConnection>scm:git@github.com/babyfish-ct/babyfish.git</developerConnection>
+    <url>https://github.com/babyfish-ct/babyfish</url>
+  </scm>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+</project>

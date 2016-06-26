@@ -1,0 +1,8 @@
+target
+.settings
+.project
+.classpath
+start-war3shop-by-hsqldb.sh
+start-war3shop-by-hsqldb.bat
+start-war3shop-by-oracle.sh
+start-war3shop-by-oracle.bat

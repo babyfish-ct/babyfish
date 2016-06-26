@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.babyfish.test.hibernate.cfg">
+
+    <class name="Employee" table="CT_EMPLOYEE" lazy="true">
+        <id name="id" column="EMPLOYEE_ID" type="long">
+            <generator class="assigned"/>
+        </id>
+        <property name="name" column="NAME" type="string" length="50" not-null="true"/>
+        <many-to-one name="department" column="DEPARTMENT_ID" class="Department" lazy="proxy" cascade="save-update"/>
+        <many-to-one name="employeeHolder" column="EMPLOYEE_HOLDER_ID" class="EmployeeHolder" lazy="proxy" cascade="save-update"/>
+    </class>
+
+</hibernate-mapping>

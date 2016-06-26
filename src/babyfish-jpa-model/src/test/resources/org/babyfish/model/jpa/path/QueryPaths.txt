@@ -1,0 +1,34 @@
+/*
+ * Tests for fetch path
+ */
+this.employees.supervisor.supervisor.annualLeaves;
+
+this..all(employees)..supervisor..supervisor..partial(annualLeaves);
+
+.employees.supervisor.supervisor.annualLeaves;
+
+..all(employees)..supervisor.supervisor.partial(annualLeaves);
+
+employees.supervisor.supervisor.annualLeaves;
+
+this..all(employees)..supervisor.supervisor.partial(annualLeaves);
+
+this..all(employees)..supervisor.supervisor.partial(annualLeaves).reason;
+
+/*
+ * Tests for simple order path
+ */
+order by 
+    this..employees..supervisor.name,
+    company.inverstors.name,
+    ..company.location.name desc;
+
+pre order by 
+    this..employees..supervisor.name asc,
+    company.inverstors.name asc,
+    ..company.location.name desc;
+
+post order by 
+    this..employees..supervisor.name,
+    company.inverstors.name,
+    ..company.location.name desc;

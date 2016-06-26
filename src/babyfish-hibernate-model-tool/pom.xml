@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.babyfish</groupId>
+    <artifactId>babyfish-parent</artifactId>
+    <version>1.1.0.Alpha</version>
+  </parent>
+  <artifactId>babyfish-hibernate-model-tool</artifactId>
+  
+  <name>babyfish-hibernate-model-tool</name>
+  <description>
+This tool project supports some maven plugins of BabyFish, 
+it shouldn't used by the user directly.
+  </description>
+  <url>https://github.com/babyfish-ct/babyfish</url>
+
+  <licenses>
+    <license>
+      <name>LGPL-3.0</name>
+      <url>http://opensource.org/licenses/LGPL-3.0</url>
+    </license>
+  </licenses>
+  
+  <developers>
+    <developer>
+      <name>Tao Chen(Chinese Name: &#38472;&#28059;)</name>
+      <email>babyfish-ct@163.com</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git@github.com/babyfish-ct/babyfish.git</connection>
+    <developerConnection>scm:git@github.com/babyfish-ct/babyfish.git</developerConnection>
+    <url>https://github.com/babyfish-ct/babyfish</url>
+  </scm>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+    <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>babyfish-hibernate-model</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>babyfish-jpa-model-tool</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.babyfish</groupId>
+        <artifactId>babyfish-instrument-maven-plugin</artifactId>
+        <version>${project.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>instrument</goal>
+              <goal>instrument-test</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>babyfish-hibernate-model-tool</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+</project>

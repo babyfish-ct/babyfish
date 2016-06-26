@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+    
+    <context:component-scan base-package="org.babyfish.springframework.test.bll.impl"/>
+    <context:component-scan base-package="org.babyfish.springframework.test.dal.impl.jpa"/>
+    <tx:annotation-driven/>
+    
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.hsqldb.jdbc.JDBCDriver"/>
+        <property name="url" value="jdbc:hsqldb:mem:org.babyfish.springframework.test.jpa.container2"/>
+        <property name="username" value="sa"/>
+        <property name="password" value="123"/>
+    </bean>
+    
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="org.babyfish.springframework.test.entities"/>
+        <!--
+            Except set the property "jpaVendorAdapter" you can also set the property "persistenceProvider", like this
+            <property name="persistenceProvider">
+                <bean class="org.babyfish.hibernate.jpa.HibernatePersistenceProvider"/>
+            </property>
+        -->
+        <property name="jpaVendorAdapter">
+            <bean class="org.babyfish.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="HSQL"/>
+            </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <!-- prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop-->
+                <prop key="hibernate.order_updates">true</prop>
+                <prop key="hibernate.use_identifier_rollback">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+</beans>

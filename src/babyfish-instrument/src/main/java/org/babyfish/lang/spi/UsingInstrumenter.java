@@ -1,0 +1,40 @@
+/*
+ * BabyFish, Object Model Framework for Java and JPA.
+ * https://github.com/babyfish-ct/babyfish
+ *
+ * Copyright (c) 2008-2016, Tao Chen
+ *
+ * This copyrighted material is made available to anyone wishing to use, modify,
+ * copy, or redistribute it subject to the terms and conditions of the GNU
+ * Lesser General Public License, as published by the Free Software Foundation.
+ *
+ * Please visit "http://opensource.org/licenses/LGPL-3.0" to know more.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+ * for more details.
+ */
+package org.babyfish.lang.spi;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * @author Tao Chen
+ */
+@Retention(RetentionPolicy.CLASS)
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface UsingInstrumenter {
+
+    /**
+     * @return The class name of Instrumenter class.
+     * This parameter is "String", not "Class&lt;?&gt;", because
+     * Instrumenter classes are often declared in the 
+     * the jars that may only be used in compilation-time,
+     * not runtime. 
+     */
+    String value();
+}

@@ -1,0 +1,26 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vc++_without_clr-delegate", "vc++_without_clr-delegate\vc++_without_clr-delegate.vcxproj", "{7FB7A941-D099-41C7-9AEF-35438DD276E8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vc++_without_clr_event", "vc++_without_clr_event\vc++_without_clr_event.vcxproj", "{340AD018-A9BA-492E-834E-56B051BB8071}"
+EndProject
+Global
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Win32 = Debug|Win32
+        Release|Win32 = Release|Win32
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {7FB7A941-D099-41C7-9AEF-35438DD276E8}.Debug|Win32.ActiveCfg = Debug|Win32
+        {7FB7A941-D099-41C7-9AEF-35438DD276E8}.Debug|Win32.Build.0 = Debug|Win32
+        {7FB7A941-D099-41C7-9AEF-35438DD276E8}.Release|Win32.ActiveCfg = Release|Win32
+        {7FB7A941-D099-41C7-9AEF-35438DD276E8}.Release|Win32.Build.0 = Release|Win32
+        {340AD018-A9BA-492E-834E-56B051BB8071}.Debug|Win32.ActiveCfg = Debug|Win32
+        {340AD018-A9BA-492E-834E-56B051BB8071}.Debug|Win32.Build.0 = Debug|Win32
+        {340AD018-A9BA-492E-834E-56B051BB8071}.Release|Win32.ActiveCfg = Release|Win32
+        {340AD018-A9BA-492E-834E-56B051BB8071}.Release|Win32.Build.0 = Release|Win32
+    EndGlobalSection
+    GlobalSection(SolutionProperties) = preSolution
+        HideSolutionNode = FALSE
+    EndGlobalSection
+EndGlobal

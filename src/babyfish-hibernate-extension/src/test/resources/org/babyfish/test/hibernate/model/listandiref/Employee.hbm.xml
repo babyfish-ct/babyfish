@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.babyfish.test.hibernate.model.listandiref" auto-import="false">
+
+    <class name="Employee" table="lir_EMPLOYEE">
+        <id name="id" column="EMPLOYEE_ID" type="long">
+            <generator class="sequence">
+                <param name="sequence">EMPLOYEE_ID_SEQ</param>
+            </generator>
+        </id>
+        <property name="name" column="NAME" type="string" length="50" not-null="true"/>
+        <property name="indexInDepartment" column="INDEX_IN_DEPARTMENT" type="int"/>
+        <many-to-one name="department" column="DEPARTMENT_ID" class="Department" lazy="proxy"/>
+    </class>
+
+</hibernate-mapping>

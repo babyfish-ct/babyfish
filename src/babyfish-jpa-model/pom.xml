@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.babyfish</groupId>
+    <artifactId>babyfish-parent</artifactId>
+    <version>1.1.0.Alpha</version>
+  </parent>
+  <artifactId>babyfish-jpa-model</artifactId>
+  
+  <name>babyfish-jpa-model</name>
+  <description>
+The model project of babyfish, it supports ObjectModel4JPA
+  </description>
+  <url>https://github.com/babyfish-ct/babyfish</url>
+
+  <licenses>
+    <license>
+      <name>LGPL-3.0</name>
+      <url>http://opensource.org/licenses/LGPL-3.0</url>
+    </license>
+  </licenses>
+  
+  <developers>
+    <developer>
+      <name>Tao Chen(Chinese Name: &#38472;&#28059;)</name>
+      <email>babyfish-ct@163.com</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git@github.com/babyfish-ct/babyfish.git</connection>
+    <developerConnection>scm:git@github.com/babyfish-ct/babyfish.git</developerConnection>
+    <url>https://github.com/babyfish-ct/babyfish</url>
+  </scm>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>babyfish-model</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.1-api</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4-runtime</artifactId>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr4-maven-plugin</artifactId>
+        <version>${antlr.version}</version>
+        <configuration>
+          <sourceDirectory>${basedir}/src/main/antlr4</sourceDirectory>
+          <outputDirectory>${project.build.directory}/generated-sources/antlr4</outputDirectory>
+          <visitor>true</visitor>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>antlr4</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.google.code.maven-replacer-plugin</groupId>
+        <artifactId>maven-replacer-plugin</artifactId>
+        <version>1.3.2</version>
+        <executions>
+          <execution>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>replace</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <includes>
+            <!-- This "target" can not be replace to "${project.build.directory}", why? -->
+            <include>target/generated-sources/antlr4/**/*.java</include>
+          </includes>
+          <regex>false</regex>
+          <replacements>
+            <replacement>
+              <!-- 
+                  ANTRL generates "import org.antlr.v4.runtime.misc.NotNull;", 
+                  but that annotation "@NotNull" will never be used so that
+                  the eclipse will report IDE some warnings.
+                  So I had to use maven-replacer-plugin to remove those "import" statements
+              -->
+              <token>import org.antlr.v4.runtime.misc.NotNull;</token>
+              <value></value>
+            </replacement>
+          </replacements>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.babyfish</groupId>
+        <artifactId>babyfish-instrument-maven-plugin</artifactId>
+        <version>${project.version}</version>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>instrument</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  
+</project>
