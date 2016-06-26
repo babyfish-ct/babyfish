@@ -32,14 +32,14 @@ BabyFish1.1需要Java8
     <tbody>
         <tr>
             <td><a href="tutorial.html">tutorial.html</a>（英文）</td>
-            <td rowspan="2">图文并茂地详细讲述部分重要功能</td>
+            <td rowspan="2">图文并茂地详细讲述部分重要功能（请使用高版本IE或其它浏览器打开）。</td>
         </tr>
         <tr>
             <td><a href="tutorial.html">tutorial_zh_CN.html</a>（中文）</td>
         </tr>
         <tr>
             <td><a href="demo-guide.html">demo-guide.html</a>（英文）</td>
-            <td rowspan="2">逐个介绍每个demo，并给出建议的阅读顺序。</td>
+            <td rowspan="2">逐个介绍每个demo，并给出建议的阅读顺序（请使用高版本IE或其它浏览器打开）。</td>
         </tr>
         <tr>
             <td><a id="demo-guide" name="demo-guide" href="demo-guide_zh_CN.html">demo-guide_zh_CN.html</a>（中文）</td>
