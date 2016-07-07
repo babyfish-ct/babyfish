@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 
 import org.babyfish.lang.internal.I18NUtils;
 import org.babyfish.org.objectweb.asm.Type;
+import org.teavm.jso.JSBody;
 
 /**
  * @author Tao Chen
@@ -34,6 +35,8 @@ public class ASMConstants {
     public static final String CHAR_SEQUENCE_DESCRIPTOR = Type.getDescriptor(CharSequence.class);
     
     public static final String I18N_INTERNAL_NAME = Type.getInternalName(I18NUtils.class);
+    
+    public static final String JS_BODY_DESCRIPTOR = Type.getDescriptor(JSBody.class);
     
     private static String descToInternalName(String desc) {
         // Tiny optimization: Make desc and internalName share same memory block.

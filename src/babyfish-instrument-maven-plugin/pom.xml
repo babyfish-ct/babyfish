@@ -49,6 +49,10 @@ it shouldn't used by the user directly.
         <version>${project.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.teavm</groupId>
+	  <artifactId>teavm-jso-apis</artifactId>
+	</dependency>
+    <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>ow2-asm</artifactId>
         <version>${project.version}</version>

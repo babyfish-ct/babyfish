@@ -25,6 +25,7 @@ import org.babyfish.lang.bytecode.ScopedMethodVisitorBuilder;
 import org.babyfish.lang.i18n.metadata.MetadataClass;
 import org.babyfish.lang.i18n.metadata.MetadataMethod;
 import org.babyfish.lang.instrument.bytecode.Replacer;
+import org.babyfish.org.objectweb.asm.AnnotationVisitor;
 import org.babyfish.org.objectweb.asm.ClassVisitor;
 import org.babyfish.org.objectweb.asm.Label;
 import org.babyfish.org.objectweb.asm.MethodVisitor;
@@ -64,7 +65,7 @@ public class TypedI18NReplacer extends Replacer {
             .visitField(
                     Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC, 
                     Identifiers.RESOURCE_BUNDLE_FILED_NAME, 
-                    ASMConstants.RESOURCE_BUNDLE_DESCRIPTOR, 
+                    "Ljava/lang/Object;", // ASMConstants.RESOURCE_BUNDLE_DESCRIPTOR is not friendly for TeaVM. 
                     null,
                     null
             )
@@ -88,6 +89,14 @@ public class TypedI18NReplacer extends Replacer {
                 );
             }
             try (ScopedMethodVisitor mv = builder.build(this.cv)) {
+            	AnnotationVisitor av = mv.visitAnnotation(ASMConstants.JS_BODY_DESCRIPTOR, true);
+            	AnnotationVisitor aav = av.visitArray("params");
+            	for (int i = 0; i < parameterCount; i++) {
+            		aav.visit(null, metadataMethod.getParameterName(i));	
+            	}
+            	aav.visitEnd();
+            	av.visit("script", this.generateI18NTeaVMScript(metadataMethod));
+            	av.visitEnd();
                 mv.visitCode();
                 this.generateI18NInsns(mv, metadataMethod);
                 mv.visitMaxs(0, 0);
@@ -105,8 +114,9 @@ public class TypedI18NReplacer extends Replacer {
                     Opcodes.GETSTATIC, 
                     internalName, 
                     Identifiers.RESOURCE_BUNDLE_FILED_NAME, 
-                    ASMConstants.RESOURCE_BUNDLE_DESCRIPTOR
+                    "Ljava/lang/Object;"
             );
+            mv.visitTypeInsn(Opcodes.CHECKCAST, ASMConstants.RESOURCE_BUNDLE_INTERNAL_NAME);
             mv.store("bundle");
             
             mv.load("bundle");
@@ -125,7 +135,7 @@ public class TypedI18NReplacer extends Replacer {
                     Opcodes.PUTSTATIC, 
                     internalName, 
                     Identifiers.RESOURCE_BUNDLE_FILED_NAME, 
-                    ASMConstants.RESOURCE_BUNDLE_DESCRIPTOR
+                    "Ljava/lang/Object;"
             );
             mv.visitLabel(bundleIsLoadedLabel);
             mv.visitFrame(
@@ -136,12 +146,7 @@ public class TypedI18NReplacer extends Replacer {
                     null
             );
             
-            mv.visitFieldInsn(
-                    Opcodes.GETSTATIC, 
-                    internalName, 
-                    Identifiers.RESOURCE_BUNDLE_FILED_NAME, 
-                    ASMConstants.RESOURCE_BUNDLE_DESCRIPTOR
-            );
+            mv.load("bundle");
             mv.visitLdcInsn(metadataMethod.getName());
             mv.visitMethodInsn(
                     Opcodes.INVOKEVIRTUAL, 
@@ -219,6 +224,37 @@ public class TypedI18NReplacer extends Replacer {
                 }
             }
             mv.visitInsn(Opcodes.ARETURN);
+        }
+        
+        private String generateI18NTeaVMScript(MetadataMethod metadataMethod) {
+        	StringBuilder builder = new StringBuilder();
+        	int parameterCount = metadataMethod.getParameterCount();
+        	String str = null;
+        	if (parameterCount != 0) {
+        		str = "javaMethods.get('org.babyfish.lang.internal.I18NUtils.toString(Ljava/lang/Object;)Ljava/lang/String;')";
+        		if (parameterCount > 1) {
+        			builder.append("var $str = " + str + ';');
+        			str = "$str";
+        		}
+        	}
+        	builder
+        	.append("return $I18N.")
+        	.append(metadataMethod.getDeclaringClass().getClassName())
+        	.append('.')
+        	.append(metadataMethod.getName());
+        	
+        	for (int i = 0; i < parameterCount; i++) {
+        		builder
+        		.append(".split('{")
+        		.append(i)
+        		.append("}').join(")
+        		.append(str)
+        		.append(".invoke(")
+        		.append(metadataMethod.getParameterName(i))
+        		.append("))");
+        	}
+        	builder.append(';');
+        	return builder.toString();
         }
     }
 }

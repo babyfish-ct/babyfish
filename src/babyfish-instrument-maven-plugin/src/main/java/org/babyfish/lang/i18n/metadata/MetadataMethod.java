@@ -79,6 +79,10 @@ public class MetadataMethod {
         this.validate(methodNode);
     }
     
+    public MetadataClass getDeclaringClass() {
+    	return this.declaringClass;
+    }
+    
     public String getName() {
         return this.name;
     }
