@@ -237,26 +237,26 @@ BabyFish1.1需要Java8
                     <ul>
                         <li>
                             一个部门可以包含多个员工，且这些员工是有先后顺序的。
-                            <pre><a href="src/babyfish-model/src/main/java/org/babyfish/model/Model.java">@Model</a> //该类使用ObjectModel4Java，需编译时字节码增强
-public class <a id="department" name="department">Department</a> {
+                            <pre>@Model //该类使用ObjectModel4Java，需编译时字节码增强
+public class Department {
     
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Association.java">@Association</a>(opposite = <a href="#employee_department">"department"</a>) //该字段和“Employee.department”字段互为镜像，构成双向关联。
-    private List&lt;<a href="#employee">Employee</a>&gt; <a id="department_employees" name="department_employees"> employees; //一个部门包含多个员工，该一对多集合字段有顺序，故采用List
+    @Association(opposite = "department") //该字段和“Employee.department”字段互为镜像，构成双向关联。
+    private List&lt;Employee&gt; employees; //一个部门包含多个员工，该一对多集合字段有顺序，故采用List
     
     此处略去Getter和Setter
 }</pre>
                         </li>
                         <li>
                             每个员工均属于某个部门，且它知道自己在其所属部门中的位置。
-                            <pre><a href="src/babyfish-model/src/main/java/org/babyfish/model/Model.java">@Model</a> //该类使用ObjectModel4Java，需编译时字节码增强
-public class <a id="employee" name="employee">Employee</a> {
+                            <pre>@Model //该类使用ObjectModel4Java，需编译时字节码增强
+public class Employee {
 
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Association.java">@Association</a>(opposite = <a href="#department_employees">"employees</a>") //该字段和“Department.employees”字段互为镜像，构成双向关联。
-    private <a href="#department">Department</a> <a id="employee_department" name="employee_department">department</a>; //员工属于一个部门，如果无，为null
+    @Association(opposite = "employees") //该字段和“Department.employees”字段互为镜像，构成双向关联。
+    private Department department; //员工属于一个部门，如果无，为null
 
     // 该字段依附于“Employee.department”字段，表示当前员工在department字段指向的父对象集合中的索引，
     // 如果department为null，此索引为-1
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Association.java">@IndexOf</a>(<a href="#employee_department">"department"</a>)
+    @IndexOf("department")
     private int index; 
 
     此处略去Getter和Setter
@@ -373,31 +373,31 @@ public class <a id="employee" name="employee">Employee</a> {
                 <ul>
                     <li>
                         一个公司可以由多个投资人投资。
-                        <pre><a href="src/babyfish-model/src/main/java/org/babyfish/model/Model.java">@Model</a> //该类使用ObjectModel4Java，需编译时字节码增强
-public class <a id="company" name="company">Company</a> {
+                        <pre>@Model //该类使用ObjectModel4Java，需编译时字节码增强
+public class Company {
     
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Scalar.java">@Scalar</a> //标量字段，非关联。
+    @Scalar //标量字段，非关联。
     private String shortName;
 
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Association.java">@Association</a>(opposite = <a href="#investor_companies">"companies"</a>) //该字段和“Investor.companies”字段互为镜像，构成双向关联。
+    @Association(opposite = "companies") //该字段和“Investor.companies”字段互为镜像，构成双向关联。
     // @ComparatorRule注解表示该Set集合使用Investor.name字段
     // 计算Investor对象的hashCode以及判断两个Investor对象是否相等。
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/ComparatorRule.java">@ComparatorRule</a>(properties = <a href="src/babyfish-model/src/main/java/org/babyfish/model/ComparatorProperty.java">@ComparatorProperty</a>(<a href="#investor_name">"name"</a>))
-    private Set&lt;<a href="#investor">Investor</a>&gt; <a id="company_investors" name="company_investors"> investors; 
+    @ComparatorRule(properties = @ComparatorProperty))
+    private Set&lt;Investor&gt; investors; 
     
     此处略去Getter和Setter
 }</pre>
                     </li>
                     <li>
                         一个投资者也可以由多个投资人投资。
-                        <pre><a href="src/babyfish-model/src/main/java/org/babyfish/model/Model.java">@Model</a> //该类使用ObjectModel4Java，需编译时字节码增强
-public class <a id="investor" name="investor">Investor</a> {
+                        <pre>@Model //该类使用ObjectModel4Java，需编译时字节码增强
+public class Investor {
     
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Scalar.java">@Scalar</a> //标量字段，非关联。
-    private String <a id="investor_name" name="investor_name">name</a>;
+    @Scalar //标量字段，非关联。
+    private String name;
 
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Association.java">@Association</a>(opposite = <a href="#company_investors">"investors"</a>) //该字段和“Company.investors”字段互为镜像，构成双向关联。
-    private Set&lt;<a href="#company">Company</a>&gt; <a id="investor_companies" name="investor_companies"> companies; 
+    @Association(opposite = "investors") //该字段和“Company.investors”字段互为镜像，构成双向关联。
+    private Set&lt;Company&gt; companies; 
     
     此处略去Getter和Setter
 }</pre>

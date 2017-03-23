@@ -261,30 +261,30 @@ BabyFish1.1 requires Java8.
                     <ul>
                         <li>
                             One department has many employees. 
-                            <pre><a href="src/babyfish-model/src/main/java/org/babyfish/model/Model.java">@Model</a> //Uses ObjectModel4Java, requires compilation-time bytecode instrument.
-public class <a id="department" name="department">Department</a> {
+                            <pre>@Model //Uses ObjectModel4Java, requires compilation-time bytecode instrument.
+public class Department {
     
     //One side of bidirectional association, 
     //this field is the mirroring of "Employee.department".
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Association.java">@Association</a>(opposite = <a href="#employee_department">"department"</a>)  
-    private List&lt;<a href="#employee">Employee</a>&gt; <a id="department_employees" name="department_employees"> employees; //List has order.
+    @Association(opposite = "department")  
+    private List&lt;Employee&gt; employees; //List has order.
     
     The getters and setters are omitted
 }</pre>
                         </li>
                         <li>
                             Each employee belongs to a department, and it also know its position in the list of its department. 
-                            <pre><a href="src/babyfish-model/src/main/java/org/babyfish/model/Model.java">@Model</a> //Uses ObjectModel4Java, requires compilation-time bytecode instrument.
-public class <a id="employee" name="employee">Employee</a> {
+                            <pre>@Model //Uses ObjectModel4Java, requires compilation-time bytecode instrument.
+public class Employee {
 
     //Other side of bidirectional association, 
     //this field is the mirroring of "Department.employees".
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Association.java">@Association</a>(opposite = <a href="#department_employees">"employees</a>")
-    private <a href="#department">Department</a> <a id="employee_department" name="employee_department">department</a>; //Employee belongs to a department, if not, it's null
+    @Association(opposite = "employees")
+    private Department department; //Employee belongs to a department, if not, it's null
 
     // This field is attached to "Employee.department", it's the index of current object in list of 
     // parent department object. If this object does not belong to any department object, it's -1.
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Association.java">@IndexOf</a>(<a href="#employee_department">"department"</a>)
+    @IndexOf("department")
     private int index; 
 
     The getters and setters are omitted
@@ -402,31 +402,31 @@ public class <a id="employee" name="employee">Employee</a> {
                 <ul>
                     <li>
                         A company can be jointly funded by multiple investors. 
-                        <pre><a href="src/babyfish-model/src/main/java/org/babyfish/model/Model.java">@Model</a> //Uses ObjectModel4Java, requires compilation-time bytecode instrument.
-public class <a id="company" name="company">Company</a> {
+                        <pre>@Model //Uses ObjectModel4Java, requires compilation-time bytecode instrument.
+public class Company {
     
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Scalar.java">@Scalar</a> //Scalar, not association. 
+    @Scalar //Scalar, not association. 
     private String shortName;
 
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Association.java">@Association</a>(opposite = <a href="#investor_companies">"companies"</a>) 
+    @Association(opposite = "companies") 
     // The annotation "@ComparatorRule" means this set collection uses the field "Investor.name"
     // to calculate the hashCode of investor and check whether two investors are equal.
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/ComparatorRule.java">@ComparatorRule</a>(properties = <a href="src/babyfish-model/src/main/java/org/babyfish/model/ComparatorProperty.java">@ComparatorProperty</a>(<a href="#investor_name">"name"</a>))
-    private Set&lt;<a href="#investor">Investor</a>&gt; <a id="company_investors" name="company_investors"> investors; 
+    @ComparatorRule(properties = @ComparatorProperty("name"))
+    private Set&lt;Investor&gt; investors; 
     
     The getters and setters are omitted
 }</pre>
                     </li>
                     <li>
                         An investor can invest in multiple companies.
-                        <pre><a href="src/babyfish-model/src/main/java/org/babyfish/model/Model.java">@Model</a> //Uses ObjectModel4Java, requires compilation-time bytecode instrument.
-public class <a id="investor" name="investor">Investor</a> {
+                        <pre>@Model //Uses ObjectModel4Java, requires compilation-time bytecode instrument.
+public class Investor {
     
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Scalar.java">@Scalar</a> //Scalar, not association. 
-    private String <a id="investor_name" name="investor_name">name</a>;
+    @Scalar //Scalar, not association. 
+    private String name;
 
-    <a href="src/babyfish-model/src/main/java/org/babyfish/model/Association.java">@Association</a>(opposite = <a href="#company_investors">"investors"</a>)
-    private Set&lt;<a href="#company">Company</a>&gt; <a id="investor_companies" name="investor_companies"> companies; 
+    @Association(opposite = "investors")
+    private Set&lt;Company&gt; companies; 
     
     The getters and setters are omitted
 }</pre>
