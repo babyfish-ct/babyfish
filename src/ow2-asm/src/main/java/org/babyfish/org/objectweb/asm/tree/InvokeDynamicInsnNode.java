@@ -32,8 +32,9 @@ package org.babyfish.org.objectweb.asm.tree;
 import java.util.Map;
 
 import org.babyfish.org.objectweb.asm.Handle;
-import org.babyfish.org.objectweb.asm.MethodVisitor;
 import org.babyfish.org.objectweb.asm.Opcodes;
+import org.babyfish.org.objectweb.asm.Type;
+import org.babyfish.org.objectweb.asm.MethodVisitor;
 
 /**
  * A node that represents an invokedynamic instruction.
@@ -68,7 +69,7 @@ public class InvokeDynamicInsnNode extends AbstractInsnNode {
      * @param name
      *            invokedynamic name.
      * @param desc
-     *            invokedynamic descriptor (see {@link org.babyfish.org.objectweb.asm.Type}).
+     *            invokedynamic descriptor (see {@link Type}).
      * @param bsm
      *            the bootstrap method.
      * @param bsmArgs

@@ -885,7 +885,7 @@ public abstract class AbstractObjectModelGenerator extends NestedClassGenerator 
                     ASMConstants.MODEL_CLASS_INTERNAL_NAME, 
                     "of", 
                     "(Ljava/lang/Class;)" + ASMConstants.MODEL_CLASS_DESCRIPTOR, 
-                    false
+                    true
             );
             mv.visitMethodInsn(
                     Opcodes.INVOKEINTERFACE, 
@@ -907,7 +907,7 @@ public abstract class AbstractObjectModelGenerator extends NestedClassGenerator 
                     ASMConstants.MODEL_CLASS_INTERNAL_NAME, 
                     "of", 
                     "(Ljava/lang/Class;)" + ASMConstants.MODEL_CLASS_DESCRIPTOR, 
-                    false
+                    true
             );
             mv.visitMethodInsn(
                     Opcodes.INVOKEINTERFACE, 

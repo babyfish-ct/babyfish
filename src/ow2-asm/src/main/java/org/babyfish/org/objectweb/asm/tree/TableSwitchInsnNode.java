@@ -34,9 +34,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.babyfish.org.objectweb.asm.Opcodes;
 import org.babyfish.org.objectweb.asm.Label;
 import org.babyfish.org.objectweb.asm.MethodVisitor;
-import org.babyfish.org.objectweb.asm.Opcodes;
 
 /**
  * A node that represents a TABLESWITCH instruction.

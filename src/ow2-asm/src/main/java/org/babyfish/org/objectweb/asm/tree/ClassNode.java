@@ -33,11 +33,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.babyfish.org.objectweb.asm.*;
 import org.babyfish.org.objectweb.asm.AnnotationVisitor;
 import org.babyfish.org.objectweb.asm.Attribute;
 import org.babyfish.org.objectweb.asm.ClassVisitor;
 import org.babyfish.org.objectweb.asm.FieldVisitor;
 import org.babyfish.org.objectweb.asm.MethodVisitor;
+import org.babyfish.org.objectweb.asm.ModuleVisitor;
 import org.babyfish.org.objectweb.asm.Opcodes;
 import org.babyfish.org.objectweb.asm.TypePath;
 
@@ -54,14 +56,14 @@ public class ClassNode extends ClassVisitor {
     public int version;
 
     /**
-     * The class's access flags (see {@link org.babyfish.org.objectweb.asm.Opcodes}). This
+     * The class's access flags (see {@link Opcodes}). This
      * field also indicates if the class is deprecated.
      */
     public int access;
 
     /**
      * The internal name of the class (see
-     * {@link org.babyfish.org.objectweb.asm.Type#getInternalName() getInternalName}).
+     * {@link Type#getInternalName() getInternalName}).
      */
     public String name;
 
@@ -72,7 +74,7 @@ public class ClassNode extends ClassVisitor {
 
     /**
      * The internal of name of the super class (see
-     * {@link org.babyfish.org.objectweb.asm.Type#getInternalName() getInternalName}). For
+     * {@link Type#getInternalName() getInternalName}). For
      * interfaces, the super class is {@link Object}. May be <tt>null</tt>, but
      * only for the {@link Object} class.
      */
@@ -80,7 +82,7 @@ public class ClassNode extends ClassVisitor {
 
     /**
      * The internal names of the class's interfaces (see
-     * {@link org.babyfish.org.objectweb.asm.Type#getInternalName() getInternalName}). This
+     * {@link Type#getInternalName() getInternalName}). This
      * list is a list of {@link String} objects.
      */
     public List<String> interfaces;
@@ -97,6 +99,11 @@ public class ClassNode extends ClassVisitor {
      */
     public String sourceDebug;
 
+    /**
+     * Module information. May be <tt>null</tt>.
+     */
+    public ModuleNode module;
+    
     /**
      * The internal name of the enclosing class of the class. May be
      * <tt>null</tt>.
@@ -118,48 +125,68 @@ public class ClassNode extends ClassVisitor {
     /**
      * The runtime visible annotations of this class. This list is a list of
      * {@link AnnotationNode} objects. May be <tt>null</tt>.
+     * 
+     * @associates AnnotationNode
+     * @label visible
      */
     public List<AnnotationNode> visibleAnnotations;
 
     /**
      * The runtime invisible annotations of this class. This list is a list of
      * {@link AnnotationNode} objects. May be <tt>null</tt>.
+     * 
+     * @associates AnnotationNode
+     * @label invisible
      */
     public List<AnnotationNode> invisibleAnnotations;
 
     /**
      * The runtime visible type annotations of this class. This list is a list
      * of {@link TypeAnnotationNode} objects. May be <tt>null</tt>.
+     * 
+     * @associates TypeAnnotationNode
+     * @label visible
      */
     public List<TypeAnnotationNode> visibleTypeAnnotations;
 
     /**
      * The runtime invisible type annotations of this class. This list is a list
      * of {@link TypeAnnotationNode} objects. May be <tt>null</tt>.
+     * 
+     * @associates TypeAnnotationNode
+     * @label invisible
      */
     public List<TypeAnnotationNode> invisibleTypeAnnotations;
 
     /**
      * The non standard attributes of this class. This list is a list of
      * {@link Attribute} objects. May be <tt>null</tt>.
+     * 
+     * @associates Attribute
      */
     public List<Attribute> attrs;
 
     /**
      * Informations about the inner classes of this class. This list is a list
      * of {@link InnerClassNode} objects.
+     * 
+     * @associates InnerClassNode
      */
     public List<InnerClassNode> innerClasses;
 
     /**
      * The fields of this class. This list is a list of {@link FieldNode}
      * objects.
+     * 
+     * @associates FieldNode
      */
     public List<FieldNode> fields;
 
     /**
      * The methods of this class. This list is a list of {@link MethodNode}
      * objects.
+     * 
+     * @associates MethodNode
      */
     public List<MethodNode> methods;
 
@@ -172,7 +199,7 @@ public class ClassNode extends ClassVisitor {
      *             If a subclass calls this constructor.
      */
     public ClassNode() {
-        this(Opcodes.ASM5);
+        this(Opcodes.ASM6);
         if (getClass() != ClassNode.class) {
             throw new IllegalStateException();
         }
@@ -183,7 +210,7 @@ public class ClassNode extends ClassVisitor {
      * 
      * @param api
      *            the ASM API version implemented by this visitor. Must be one
-     *            of {@link Opcodes#ASM4} or {@link Opcodes#ASM5}.
+     *            of {@link Opcodes#ASM4}, {@link Opcodes#ASM5} or {@link Opcodes#ASM6}.
      */
     public ClassNode(final int api) {
         super(api);
@@ -216,6 +243,12 @@ public class ClassNode extends ClassVisitor {
         sourceFile = file;
         sourceDebug = debug;
     }
+    
+    @Override
+    public ModuleVisitor visitModule(final String name, final int access,
+            final String version) {
+        return module = new ModuleNode(name, access, version); 
+    }
 
     @Override
     public void visitOuterClass(final String owner, final String name,
@@ -227,7 +260,7 @@ public class ClassNode extends ClassVisitor {
 
     @Override
     public AnnotationVisitor visitAnnotation(final String desc,
-            final boolean visible) {
+                                             final boolean visible) {
         AnnotationNode an = new AnnotationNode(desc);
         if (visible) {
             if (visibleAnnotations == null) {
@@ -309,11 +342,16 @@ public class ClassNode extends ClassVisitor {
      * API than the given version.
      * 
      * @param api
-     *            an ASM API version. Must be one of {@link Opcodes#ASM4} or
-     *            {@link Opcodes#ASM5}.
+     *            an ASM API version. Must be one of {@link Opcodes#ASM4},
+     *            {@link Opcodes#ASM5} or {@link Opcodes#ASM6}.
      */
     public void check(final int api) {
-        if (api == Opcodes.ASM4) {
+        if (api < Opcodes.ASM6) {
+            if (module != null) {
+                throw new RuntimeException();
+            }
+        }
+        if (api < Opcodes.ASM5) {
             if (visibleTypeAnnotations != null
                     && visibleTypeAnnotations.size() > 0) {
                 throw new RuntimeException();
@@ -322,12 +360,31 @@ public class ClassNode extends ClassVisitor {
                     && invisibleTypeAnnotations.size() > 0) {
                 throw new RuntimeException();
             }
-            for (FieldNode f : fields) {
-                f.check(api);
-            }
-            for (MethodNode m : methods) {
-                m.check(api);
-            }
+        }
+        // checks attributes
+        int i, n;
+        n = visibleAnnotations == null ? 0 : visibleAnnotations.size();
+        for (i = 0; i < n; ++i) {
+            visibleAnnotations.get(i).check(api);
+        }
+        n = invisibleAnnotations == null ? 0 : invisibleAnnotations.size();
+        for (i = 0; i < n; ++i) {
+            invisibleAnnotations.get(i).check(api);
+        }
+        n = visibleTypeAnnotations == null ? 0 : visibleTypeAnnotations.size();
+        for (i = 0; i < n; ++i) {
+            visibleTypeAnnotations.get(i).check(api);
+        }
+        n = invisibleTypeAnnotations == null ? 0 : invisibleTypeAnnotations
+                .size();
+        for (i = 0; i < n; ++i) {
+            invisibleTypeAnnotations.get(i).check(api);
+        }
+        for (FieldNode f : fields) {
+            f.check(api);
+        }
+        for (MethodNode m : methods) {
+            m.check(api);
         }
     }
 
@@ -345,6 +402,10 @@ public class ClassNode extends ClassVisitor {
         // visits source
         if (sourceFile != null || sourceDebug != null) {
             cv.visitSource(sourceFile, sourceDebug);
+        }
+        // visits module
+        if (module != null) {
+            module.accept(cv);
         }
         // visits outer class
         if (outerClass != null) {

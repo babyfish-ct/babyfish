@@ -65,6 +65,9 @@ public class TryCatchBlockNode {
      * The runtime visible type annotations on the exception handler type. This
      * list is a list of {@link TypeAnnotationNode} objects. May be
      * <tt>null</tt>.
+     * 
+     * @associates TypeAnnotationNode
+     * @label visible
      */
     public List<TypeAnnotationNode> visibleTypeAnnotations;
 
@@ -72,6 +75,9 @@ public class TryCatchBlockNode {
      * The runtime invisible type annotations on the exception handler type.
      * This list is a list of {@link TypeAnnotationNode} objects. May be
      * <tt>null</tt>.
+     * 
+     * @associates TypeAnnotationNode
+     * @label invisible
      */
     public List<TypeAnnotationNode> invisibleTypeAnnotations;
 

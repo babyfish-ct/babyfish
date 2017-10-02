@@ -32,6 +32,7 @@ package org.babyfish.org.objectweb.asm.tree;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.babyfish.org.objectweb.asm.*;
 import org.babyfish.org.objectweb.asm.AnnotationVisitor;
 import org.babyfish.org.objectweb.asm.Attribute;
 import org.babyfish.org.objectweb.asm.ClassVisitor;
@@ -47,7 +48,7 @@ import org.babyfish.org.objectweb.asm.TypePath;
 public class FieldNode extends FieldVisitor {
 
     /**
-     * The field's access flags (see {@link org.babyfish.org.objectweb.asm.Opcodes}). This
+     * The field's access flags (see {@link Opcodes}). This
      * field also indicates if the field is synthetic and/or deprecated.
      */
     public int access;
@@ -58,7 +59,7 @@ public class FieldNode extends FieldVisitor {
     public String name;
 
     /**
-     * The field's descriptor (see {@link org.babyfish.org.objectweb.asm.Type}).
+     * The field's descriptor (see {@link Type}).
      */
     public String desc;
 
@@ -77,30 +78,44 @@ public class FieldNode extends FieldVisitor {
     /**
      * The runtime visible annotations of this field. This list is a list of
      * {@link AnnotationNode} objects. May be <tt>null</tt>.
+     * 
+     * @associates AnnotationNode
+     * @label visible
      */
     public List<AnnotationNode> visibleAnnotations;
 
     /**
      * The runtime invisible annotations of this field. This list is a list of
      * {@link AnnotationNode} objects. May be <tt>null</tt>.
+     * 
+     * @associates AnnotationNode
+     * @label invisible
      */
     public List<AnnotationNode> invisibleAnnotations;
 
     /**
      * The runtime visible type annotations of this field. This list is a list
      * of {@link TypeAnnotationNode} objects. May be <tt>null</tt>.
+     * 
+     * @associates TypeAnnotationNode
+     * @label visible
      */
     public List<TypeAnnotationNode> visibleTypeAnnotations;
 
     /**
      * The runtime invisible type annotations of this field. This list is a list
      * of {@link TypeAnnotationNode} objects. May be <tt>null</tt>.
+     * 
+     * @associates TypeAnnotationNode
+     * @label invisible
      */
     public List<TypeAnnotationNode> invisibleTypeAnnotations;
 
     /**
      * The non standard attributes of this field. This list is a list of
      * {@link Attribute} objects. May be <tt>null</tt>.
+     * 
+     * @associates Attribute
      */
     public List<Attribute> attrs;
 
@@ -111,12 +126,12 @@ public class FieldNode extends FieldVisitor {
      * 
      * @param access
      *            the field's access flags (see
-     *            {@link org.babyfish.org.objectweb.asm.Opcodes}). This parameter also
+     *            {@link Opcodes}). This parameter also
      *            indicates if the field is synthetic and/or deprecated.
      * @param name
      *            the field's name.
      * @param desc
-     *            the field's descriptor (see {@link org.babyfish.org.objectweb.asm.Type
+     *            the field's descriptor (see {@link Type
      *            Type}).
      * @param signature
      *            the field's signature.
@@ -130,7 +145,7 @@ public class FieldNode extends FieldVisitor {
      */
     public FieldNode(final int access, final String name, final String desc,
             final String signature, final Object value) {
-        this(Opcodes.ASM5, access, name, desc, signature, value);
+        this(Opcodes.ASM6, access, name, desc, signature, value);
         if (getClass() != FieldNode.class) {
             throw new IllegalStateException();
         }
@@ -145,12 +160,12 @@ public class FieldNode extends FieldVisitor {
      *            of {@link Opcodes#ASM4} or {@link Opcodes#ASM5}.
      * @param access
      *            the field's access flags (see
-     *            {@link org.babyfish.org.objectweb.asm.Opcodes}). This parameter also
+     *            {@link Opcodes}). This parameter also
      *            indicates if the field is synthetic and/or deprecated.
      * @param name
      *            the field's name.
      * @param desc
-     *            the field's descriptor (see {@link org.babyfish.org.objectweb.asm.Type
+     *            the field's descriptor (see {@link Type
      *            Type}).
      * @param signature
      *            the field's signature.
@@ -176,7 +191,7 @@ public class FieldNode extends FieldVisitor {
 
     @Override
     public AnnotationVisitor visitAnnotation(final String desc,
-            final boolean visible) {
+                                             final boolean visible) {
         AnnotationNode an = new AnnotationNode(desc);
         if (visible) {
             if (visibleAnnotations == null) {
@@ -233,8 +248,8 @@ public class FieldNode extends FieldVisitor {
      * API than the given version.
      * 
      * @param api
-     *            an ASM API version. Must be one of {@link Opcodes#ASM4} or
-     *            {@link Opcodes#ASM5}.
+     *            an ASM API version. Must be one of {@link Opcodes#ASM4},
+     *            {@link Opcodes#ASM5} or {@link Opcodes#ASM6}.
      */
     public void check(final int api) {
         if (api == Opcodes.ASM4) {

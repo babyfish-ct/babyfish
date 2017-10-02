@@ -32,6 +32,7 @@ package org.babyfish.org.objectweb.asm.tree;
 import java.util.Map;
 
 import org.babyfish.org.objectweb.asm.MethodVisitor;
+import org.babyfish.org.objectweb.asm.Type;
 import org.babyfish.org.objectweb.asm.Opcodes;
 
 /**
@@ -44,7 +45,7 @@ public class LdcInsnNode extends AbstractInsnNode {
     /**
      * The constant to be loaded on the stack. This parameter must be a non null
      * {@link Integer}, a {@link Float}, a {@link Long}, a {@link Double}, a
-     * {@link String} or a {@link org.babyfish.org.objectweb.asm.Type}.
+     * {@link String} or a {@link Type}.
      */
     public Object cst;
 

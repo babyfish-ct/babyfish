@@ -445,7 +445,7 @@ public abstract class ClassWrapper {
             this.generateMethod(cv, methodImplementation);
         }
         cv.visitEnd();
-        //new org.babyfish.org.objectweb.asm.ClassReader(((ClassWriter)cv).toByteArray()).accept(new org.babyfish.org.objectweb.asm.util.TraceClassVisitor(new java.io.PrintWriter(System.out)),0);
+        //new org.babyfish.ClassReader(((ClassWriter)cv).toByteArray()).accept(new org.babyfish.org.objectweb.asm.util.TraceClassVisitor(new java.io.PrintWriter(System.out)),0);
     }
     
     private void generateConstructor(ClassVisitor cv) {

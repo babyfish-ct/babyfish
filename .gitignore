@@ -1,7 +1,9 @@
 target
+.idea
 .settings
 .project
 .classpath
+*.iml
 start-war3shop-by-hsqldb.sh
 start-war3shop-by-hsqldb.bat
 start-war3shop-by-oracle.sh

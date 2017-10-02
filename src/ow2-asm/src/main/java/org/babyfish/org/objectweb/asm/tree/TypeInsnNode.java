@@ -31,6 +31,7 @@ package org.babyfish.org.objectweb.asm.tree;
 
 import java.util.Map;
 
+import org.babyfish.org.objectweb.asm.Type;
 import org.babyfish.org.objectweb.asm.MethodVisitor;
 
 /**
@@ -43,7 +44,7 @@ public class TypeInsnNode extends AbstractInsnNode {
 
     /**
      * The operand of this instruction. This operand is an internal name (see
-     * {@link org.babyfish.org.objectweb.asm.Type}).
+     * {@link Type}).
      */
     public String desc;
 
@@ -55,7 +56,7 @@ public class TypeInsnNode extends AbstractInsnNode {
      *            opcode must be NEW, ANEWARRAY, CHECKCAST or INSTANCEOF.
      * @param desc
      *            the operand of the instruction to be constructed. This operand
-     *            is an internal name (see {@link org.babyfish.org.objectweb.asm.Type}).
+     *            is an internal name (see {@link Type}).
      */
     public TypeInsnNode(final int opcode, final String desc) {
         super(opcode);

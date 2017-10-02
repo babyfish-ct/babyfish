@@ -31,8 +31,8 @@ package org.babyfish.org.objectweb.asm.tree;
 
 import java.util.Map;
 
-import org.babyfish.org.objectweb.asm.MethodVisitor;
 import org.babyfish.org.objectweb.asm.Opcodes;
+import org.babyfish.org.objectweb.asm.MethodVisitor;
 
 /**
  * A node that represents an IINC instruction.

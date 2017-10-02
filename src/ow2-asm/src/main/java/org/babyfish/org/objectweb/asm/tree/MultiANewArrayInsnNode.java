@@ -31,8 +31,9 @@ package org.babyfish.org.objectweb.asm.tree;
 
 import java.util.Map;
 
-import org.babyfish.org.objectweb.asm.MethodVisitor;
 import org.babyfish.org.objectweb.asm.Opcodes;
+import org.babyfish.org.objectweb.asm.Type;
+import org.babyfish.org.objectweb.asm.MethodVisitor;
 
 /**
  * A node that represents a MULTIANEWARRAY instruction.
@@ -42,7 +43,7 @@ import org.babyfish.org.objectweb.asm.Opcodes;
 public class MultiANewArrayInsnNode extends AbstractInsnNode {
 
     /**
-     * An array type descriptor (see {@link org.babyfish.org.objectweb.asm.Type}).
+     * An array type descriptor (see {@link Type}).
      */
     public String desc;
 
@@ -55,7 +56,7 @@ public class MultiANewArrayInsnNode extends AbstractInsnNode {
      * Constructs a new {@link MultiANewArrayInsnNode}.
      * 
      * @param desc
-     *            an array type descriptor (see {@link org.babyfish.org.objectweb.asm.Type}).
+     *            an array type descriptor (see {@link Type}).
      * @param dims
      *            number of dimensions of the array to allocate.
      */

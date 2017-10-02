@@ -31,6 +31,7 @@ package org.babyfish.org.objectweb.asm.tree;
 
 import java.util.Map;
 
+import org.babyfish.org.objectweb.asm.Type;
 import org.babyfish.org.objectweb.asm.MethodVisitor;
 
 /**
@@ -43,7 +44,7 @@ public class FieldInsnNode extends AbstractInsnNode {
 
     /**
      * The internal name of the field's owner class (see
-     * {@link org.babyfish.org.objectweb.asm.Type#getInternalName() getInternalName}).
+     * {@link Type#getInternalName() getInternalName}).
      */
     public String owner;
 
@@ -53,7 +54,7 @@ public class FieldInsnNode extends AbstractInsnNode {
     public String name;
 
     /**
-     * The field's descriptor (see {@link org.babyfish.org.objectweb.asm.Type}).
+     * The field's descriptor (see {@link Type}).
      */
     public String desc;
 
@@ -65,12 +66,12 @@ public class FieldInsnNode extends AbstractInsnNode {
      *            opcode must be GETSTATIC, PUTSTATIC, GETFIELD or PUTFIELD.
      * @param owner
      *            the internal name of the field's owner class (see
-     *            {@link org.babyfish.org.objectweb.asm.Type#getInternalName()
+     *            {@link Type#getInternalName()
      *            getInternalName}).
      * @param name
      *            the field's name.
      * @param desc
-     *            the field's descriptor (see {@link org.babyfish.org.objectweb.asm.Type}).
+     *            the field's descriptor (see {@link Type}).
      */
     public FieldInsnNode(final int opcode, final String owner,
             final String name, final String desc) {

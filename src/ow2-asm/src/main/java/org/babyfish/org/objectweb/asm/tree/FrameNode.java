@@ -34,8 +34,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.babyfish.org.objectweb.asm.MethodVisitor;
 import org.babyfish.org.objectweb.asm.Opcodes;
+import org.babyfish.org.objectweb.asm.MethodVisitor;
 
 /**
  * A node that represents a stack map frame. These nodes are pseudo instruction
